@@ -1,11 +1,16 @@
-import Link from "next/link"
+"use client"
+import { useSession } from "next-auth/react"
 
 export default function Home() {
+  const {data: session} = useSession();
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Link href="/"><h1 className='text-5xl font-bold'>ChatWithMe</h1></Link>
       <div className='mt-10 flex flex-col'>
-        
+        {session ? (
+          <h1>Hello, {session.user?.name}</h1>
+        ): (
+          <h1>Please Log in</h1>
+        )}
       </div>
     </main>
   )
