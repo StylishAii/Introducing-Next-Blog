@@ -24,7 +24,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={geist.className}>
         <NextUIProv>
-          <SessionProvider session={session}>
+          <SessionProvider basePath="/api/auth" session={session}>
             <Navbar/>
             {children}
           </SessionProvider>
