@@ -1,9 +1,15 @@
 "use client"
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar } from "@nextui-org/react";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function UserDropMenu() {
     const {data: session} = useSession();
+    const router = useRouter();
+
+    function handleClick() {
+      router.push('settings')
+    }
   return (
     <Dropdown className="bg-[#3a33a3]" placement="bottom-start">
         <DropdownTrigger>
@@ -23,13 +29,13 @@ function UserDropMenu() {
             <p className="font-bold">Signed in as</p>
             <p className="font-bold">{session?.user?.name}</p>
           </DropdownItem>
-          <DropdownItem key="settings">
+          <DropdownItem onClick={handleClick} key="settings">
             My Settings
           </DropdownItem>
           <DropdownItem key="help_and_feedback">
             Help & Feedback
           </DropdownItem>
-          <DropdownItem onClick={()=>signOut()}  key="logout" color="danger">
+          <DropdownItem onClick={()=>signOut()} key="logout" color="danger">
             Log Out
           </DropdownItem>
         </DropdownMenu>
