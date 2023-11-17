@@ -17,6 +17,7 @@ model User {
   createdAt       DateTime    @default(now())
   emailVerified   DateTime?   @map("verifiedAt")
   sessions        Session[]
+  name            String
   @@map("users")
 }
  
