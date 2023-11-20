@@ -9,7 +9,7 @@ export function AuthButton() {
   
   return (
     <div className="flex">
-        <Button onClick={()=>signIn()} color="default">Log in</Button>
+        <Link href={'/login'}><Button color="default">Log in</Button></Link>
       </div>
     );
   }

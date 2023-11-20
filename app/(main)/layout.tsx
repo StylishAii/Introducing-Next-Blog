@@ -3,7 +3,7 @@ import { GeistSans } from "geist/font";
 import SessionProvider from "@/components/AuthProvider";
 import NextUIProv from "@/components/NextUIProv";
 import Navbar from "@/components/ui/Navbar";
-import "./globals.css";
+import "../globals.css";
 import { getServerSession } from "next-auth";
 
 const geist = GeistSans;
