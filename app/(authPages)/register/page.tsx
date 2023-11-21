@@ -6,6 +6,8 @@ import { Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
 import React from "react";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
+import { FaGithub, FaGoogle } from "react-icons/fa";
+import { signIn } from "next-auth/react";
 
 function Register() {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -17,9 +19,9 @@ function Register() {
   };
 
   const notify = () =>
-    toast.custom(warning, {
+    toast.error(warning, {
       // configuring react toastify notifications
-      icon: !warning.includes("successfully") ? <AlertCircle className="bg-yellow-400"/> : <CheckCircle className="bg-green-600" /> ,
+      icon: !warning.includes("successfully") ? <AlertCircle className="text-yellow-400"/> : <CheckCircle className="text-green-600" /> ,
       style: {
         borderRadius: "20px",
         backgroundColor: "#333",
@@ -41,9 +43,7 @@ function Register() {
     if (!password || password.length < 8) {
       setWarning("Password is invalid");
       return;
-    }
-
-    notify();
+    };
 
     try {
       const res = await fetch("/api/register", {
@@ -59,7 +59,7 @@ function Register() {
       });
       if (res.status === 400) {
         setWarning("This user is already registered");
-        notify()
+          notify()
       }
 
       if (res.status === 200) {
@@ -71,10 +71,8 @@ function Register() {
       }
     } catch (error) {
       setWarning("Error, try again");
-      notify()
       console.log(error);
     }
-    console.log(name);
   }
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -144,8 +142,12 @@ function Register() {
           </Button>
         </form>
 
-        <div className="mt-10 flex justify-center">
+        <div className="my-10 flex justify-center">
           <Link href={"/login"}>Log in with an existing account</Link>
+        </div>
+        <div className="flex justify-between gap-x-3">
+          <Button onClick={()=>signIn("google")} className="py-5" fullWidth variant="solid" ><FaGoogle className="w-6 h-10"/></Button>
+          <Button onClick={()=>signIn("github")} className="py-5" fullWidth variant="solid"> <FaGithub className="w-6 h-6"/></Button>
         </div>
       </div>
       <Toaster position="top-right" />
