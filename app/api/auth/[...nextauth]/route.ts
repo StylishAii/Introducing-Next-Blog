@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import NextAuth, {NextAuthOptions, Account, User as AuthUser} from "next-auth"
+import NextAuth, {NextAuthOptions, Account, User} from "next-auth"
 import  GithubProvider from "next-auth/providers/github"
 import  GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -42,7 +42,8 @@ const authOptions: NextAuthOptions = {
         }),
     ],
     callbacks: {
-        async signIn({user, account}: {user:AuthUser, account: Account}) {
+        // @ts-ignore
+        async signIn({user, account}: {user:User, account: Account}) {
             if(account?.provider === "credentials") {
                 return true;
             }
@@ -52,10 +53,14 @@ const authOptions: NextAuthOptions = {
                     const existingUser = await Users.findOne({email: user.email});
                     if(!existingUser) {
                         const newUser = new Users({
-                            email: user.email
+                            email: user.email,
+                            name: user.name
                         });
 
                         await newUser.save();
+                        return true;
+                    }
+                    if(existingUser){
                         return true;
                     }
                 } catch(err) {
@@ -63,7 +68,8 @@ const authOptions: NextAuthOptions = {
                     return false;
                 }
             }
-        }
+        },
+        
     },
     secret: process.env.NEXTAUTH_SECRET,
     // session:{
