@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server'
  
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  if(request.cookies.has("next-auth.session-token")) { // if user logged in 
+  if(request.cookies.has("next-auth.session-token") || request.cookies.has("__Secure-next-auth.session-token")) { // if user logged in 
     return NextResponse.rewrite(new URL('/settings', request.url))  // i can redirect to the protected page if i want
 
   } else { // if there is no user logged in
