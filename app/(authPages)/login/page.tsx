@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect } from "react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
-import TsParticles from "@/components/TsParticles";
+// import TsParticles from "@/components/TsParticles";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
@@ -79,8 +79,8 @@ export default function Login() {
             isRequired
             size="lg"
             classNames={{
-              inputWrapper: "bg-black  border-white/80",
-              label: "text-white/70",
+              inputWrapper: "dark:bg-black dark:text-white bg-white text-black  border-white/80",
+              label: "dark:text-white/70 text-black",
             }}
             type="email"
             name="email"
@@ -92,8 +92,8 @@ export default function Login() {
             isRequired
             size="lg"
             classNames={{
-              inputWrapper: "bg-black border-white/80 ",
-              label: "text-white/70",
+              inputWrapper: "dark:bg-black dark:text-white bg-white text-black  border-white/80",
+              label: "dark:text-white/70 text-black",
             }}
             className=""
             endContent={

@@ -1,5 +1,5 @@
 "use client";
-import TsParticles from "@/components/TsParticles";
+// import TsParticles from "@/components/TsParticles";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
 import { Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
