@@ -8,11 +8,9 @@ import { Moon, Sun } from "lucide-react";
 
 
 function Settings() {
-  const { setTheme} = useTheme();
-  const theme = localStorage.getItem("theme");
-  useEffect(()=>{
-
-  },[theme])
+  const { theme,setTheme} = useTheme();
+  // const theme = localStorage.getItem("theme");
+  
   return (
     <main className={`dark:bg-[#191c1c] light:bg-[#6c6767] flex min-h-screen flex-col  px-10 pt-20 ${montserrat.className} `}>
       <h1 className='text-2xl font-extrabold tracking-wide mx-auto'>Settings</h1>

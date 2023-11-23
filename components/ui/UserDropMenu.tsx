@@ -11,7 +11,7 @@ function UserDropMenu() {
       router.push('settings')
     }
   return (
-    <Dropdown className="bg-[#403f3f] dark:bg-[#4d4d4d]" placement="bottom-start">
+    <Dropdown className="bg-[#403f3f] dark:bg-[#2b2b2b]" placement="bottom-start">
         <DropdownTrigger>
           <Avatar
             classNames={{
@@ -25,17 +25,17 @@ function UserDropMenu() {
           />
         </DropdownTrigger>
         <DropdownMenu aria-label="User Actions" variant="flat">
-          <DropdownItem key="profile" className="h-14 gap-2 text-white">
+          <DropdownItem key="profile" className="h-14 gap-2 text-white hover:underline hover:underline-offset-2 dark:hover:bg-[#312e81bf] dark:hover:underline dark:hover:underline-offset-2">
             <p className="font-bold">Signed in as</p>
             <p className="font-bold">{session?.user?.name}</p>
           </DropdownItem>
-          <DropdownItem onClick={handleClick} key="settings" className="text-white">
+          <DropdownItem onClick={handleClick} key="settings" className="text-white hover:underline hover:underline-offset-2 dark:hover:underline dark:hover:underline-offset-2 dark:hover:bg-[#312e81bf]">
             My Settings
           </DropdownItem>
-          <DropdownItem key="help_and_feedback" className="text-white">
+          <DropdownItem key="help_and_feedback" className="text-white hover:underline hover:underline-offset-2 dark:hover:bg-[#312e81bf] dark:hover:underline dark:hover:underline-offset-2">
             Help & Feedback
           </DropdownItem>
-          <DropdownItem onClick={()=>signOut()} key="logout" color="danger" className="text-red-400">
+          <DropdownItem onClick={()=>signOut()} key="logout" color="danger" className="text-red-400 hover:underline hover:underline-offset-2 dark:hover:underline dark:hover:underline-offset-2">
             Log Out
           </DropdownItem>
         </DropdownMenu>
