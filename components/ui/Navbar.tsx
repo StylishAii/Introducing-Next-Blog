@@ -19,7 +19,7 @@ export function AuthButton() {
     
     return (
       <>
-        <nav className="p-3 flex w-full justify-between md:justify-evenly">
+        <nav className="dark:bg-black p-3 flex w-full justify-between md:justify-evenly">
           <Link href={"/"}>
             <h1 className="text-2xl font-bold hover:opacity-75">ChatWithMe</h1>
           </Link>
