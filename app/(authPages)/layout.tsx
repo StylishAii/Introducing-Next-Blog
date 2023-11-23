@@ -24,7 +24,7 @@ export default async  function AuthRootLayout({
     <html lang="en">
       <body className={geist.className}>
       <SessionProvider basePath="/api/auth" session={session}>
-       <section className='min-h-screen bg-white/10 flex items-center justify-center '>
+       <section className=' min-h-screen dark:bg-white/10 light:bg-white flex items-center justify-center '>
             {children}
        </section>
       </SessionProvider>

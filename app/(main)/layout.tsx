@@ -5,6 +5,7 @@ import NextUIProv from "@/components/NextUIProv";
 import Navbar from "@/components/ui/Navbar";
 import "../globals.css";
 import { getServerSession } from "next-auth";
+import NextThemesProvider from "@/components/NextThemesProvider";
 
 const geist = GeistSans;
 
@@ -24,10 +25,12 @@ export default async function RootLayout({
     <html lang="en">
       <body className={geist.className}>
         <NextUIProv>
+          <NextThemesProvider attribute="class" defaultTheme="dark">
           <SessionProvider basePath="/api/auth" session={session}>
             <Navbar/>
             {children}
           </SessionProvider>
+          </NextThemesProvider>
         </NextUIProv>
       </body>
     </html>

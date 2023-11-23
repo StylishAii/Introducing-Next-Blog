@@ -15,9 +15,18 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      fontFamily: {
+        montserrat: "var(--font-montserrat)"
+      }
     },
   },
   darkMode: "class",
-  plugins: [nextui()]
+  plugins: [nextui({
+    themes:{
+      dark: {
+        
+      }
+    }
+  })]
 }
 export default config
