@@ -75,6 +75,7 @@ const authOptions: NextAuthOptions = {
     // session:{
     //     strategy:"jwt"
     // }
+    debug: true,
 }
 
 const handler = NextAuth(authOptions);
