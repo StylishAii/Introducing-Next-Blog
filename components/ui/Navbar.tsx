@@ -21,7 +21,7 @@ export function AuthButton() {
       <>
         <nav className="p-3 flex w-full justify-between md:justify-evenly">
           <Link href={"/"}>
-            <h1 className="text-2xl font-bold">ChatWithMe</h1>
+            <h1 className="text-2xl font-bold hover:opacity-75">ChatWithMe</h1>
           </Link>
           {!session ? <AuthButton /> : <UserDropMenu/> }
           

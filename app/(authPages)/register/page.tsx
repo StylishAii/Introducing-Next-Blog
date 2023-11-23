@@ -85,8 +85,8 @@ function Register() {
             isRequired
             size="lg"
             classNames={{
-              inputWrapper: "bg-black  border-white/80",
-              label: "text-white/70",
+              inputWrapper: "dark:bg-black dark:text-white bg-white text-black  border-white/80",
+              label: "dark:text-white/70 text-black",
             }}
             type="text"
             name="name"
@@ -97,8 +97,8 @@ function Register() {
             isRequired
             size="lg"
             classNames={{
-              inputWrapper: "bg-black  border-white/80",
-              label: "text-white/70",
+              inputWrapper: "dark:bg-black dark:text-white bg-white text-black  border-white/80",
+              label: "dark:text-white/70 text-black",
             }}
             type="email"
             name="email"
@@ -110,23 +110,10 @@ function Register() {
             isRequired
             size="lg"
             classNames={{
-              inputWrapper: "bg-black border-white/80 ",
-              label: "text-white/70",
+              inputWrapper: "dark:bg-black dark:text-white bg-white text-black  border-white/80",
+              label: "dark:text-white/70 text-black",
             }}
             className=""
-            endContent={
-              <button
-                className="focus:outline-none"
-                type="button"
-                onClick={toggleVisibility}
-              >
-                {isVisible ? (
-                  <Eye className="text-2xl text-default-400 pointer-events-none" />
-                ) : (
-                  <EyeOff className="text-2xl text-default-400 pointer-events-none" />
-                )}
-              </button>
-            }
             type={isVisible ? "text" : "password"}
             name="password"
             minLength={8}

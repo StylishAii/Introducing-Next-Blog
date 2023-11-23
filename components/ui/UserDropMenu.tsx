@@ -11,7 +11,7 @@ function UserDropMenu() {
       router.push('settings')
     }
   return (
-    <Dropdown className="bg-[#3a33a3]" placement="bottom-start">
+    <Dropdown className="bg-[#403f3f] dark:bg-[#4d4d4d]" placement="bottom-start">
         <DropdownTrigger>
           <Avatar
             classNames={{
@@ -29,13 +29,13 @@ function UserDropMenu() {
             <p className="font-bold">Signed in as</p>
             <p className="font-bold">{session?.user?.name}</p>
           </DropdownItem>
-          <DropdownItem onClick={handleClick} key="settings">
+          <DropdownItem onClick={handleClick} key="settings" className="text-white">
             My Settings
           </DropdownItem>
-          <DropdownItem key="help_and_feedback">
+          <DropdownItem key="help_and_feedback" className="text-white">
             Help & Feedback
           </DropdownItem>
-          <DropdownItem onClick={()=>signOut()} key="logout" color="danger">
+          <DropdownItem onClick={()=>signOut()} key="logout" color="danger" className="text-red-400">
             Log Out
           </DropdownItem>
         </DropdownMenu>

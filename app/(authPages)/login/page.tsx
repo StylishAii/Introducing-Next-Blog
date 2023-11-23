@@ -96,19 +96,6 @@ export default function Login() {
               label: "dark:text-white/70 text-black",
             }}
             className=""
-            endContent={
-              <button
-                className="focus:outline-none"
-                type="button"
-                onClick={toggleVisibility}
-              >
-                {isVisible ? (
-                  <Eye className="text-2xl text-default-400 pointer-events-none" />
-                ) : (
-                  <EyeOff className="text-2xl text-default-400 pointer-events-none" />
-                )}
-              </button>
-            }
             type={isVisible ? "text" : "password"}
             name="email"
             variant={"faded"}
