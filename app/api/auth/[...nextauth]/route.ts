@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
-import NextAuth, {NextAuthOptions, Account, User} from "next-auth"
+import NextAuth, {NextAuthOptions, Account, User,Session} from "next-auth"
 import  GithubProvider from "next-auth/providers/github"
 import  GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials";
 import Users from "@/models/Users";
 import connect from "@/utils/server-helper";
 import bcrypt from 'bcrypt'
+import { JWT } from "next-auth/jwt";
 
 const authOptions: NextAuthOptions = {
     // adapter: PrismaAdapter(prisma),
@@ -69,12 +70,22 @@ const authOptions: NextAuthOptions = {
                 }
             }
         },
+        //@ts-ignore
+        async jwt({token, user, session}: {
+            token: JWT,
+            user: User,
+            session: Session
+        }) {
+            console.log("jwt callback")
+            return token;
+
+        }
         
     },
     secret: process.env.NEXTAUTH_SECRET,
-    // session:{
-    //     strategy:"jwt"
-    // }
+    session:{
+        strategy:"jwt"
+    },
     debug: true,
 }
 

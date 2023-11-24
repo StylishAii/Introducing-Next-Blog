@@ -6,6 +6,10 @@ import Navbar from "@/components/ui/Navbar";
 import "../globals.css";
 import { getServerSession } from "next-auth";
 import NextThemesProvider from "@/components/NextThemesProvider";
+import Ably from 'ably';
+import AblyClientProvider from "@/components/AblyProvider";
+
+
 
 const geist = GeistSans;
 
@@ -24,6 +28,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={geist.className}>
+      <AblyClientProvider>
         <NextUIProv>
           <NextThemesProvider attribute="class" defaultTheme="dark">
           <SessionProvider basePath="/api/auth" session={session}>
@@ -32,6 +37,7 @@ export default async function RootLayout({
           </SessionProvider>
           </NextThemesProvider>
         </NextUIProv>
+      </AblyClientProvider>
       </body>
     </html>
   );
