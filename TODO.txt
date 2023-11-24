@@ -2,3 +2,8 @@
 - Dark/Light mode ✅
 - Fix Login screen password input show password button, there is a bug ✅
 - Add jwt session strategy 🔨
+
+
+Vercel:
+
+-  When using a third-party service it is important to keep in mind that the client should be used to subscribe to events, while all publishing should be handled by a Serverless Function. 
