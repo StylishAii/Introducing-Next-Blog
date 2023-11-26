@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 // import TsParticles from "@/components/TsParticles";
 import { Input, Button } from "@nextui-org/react";
@@ -8,59 +8,57 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
 import { useSession, signIn } from "next-auth/react";
-
-
-export default function Login() {
-  const [isVisible, setIsVisible] = React.useState(false);
-  const [warning, setWarning] = React.useState("")
+  
+  
+  export default function Login() {
+  const [warning, setWarning] = React.useState<null | string>(null)
   const router = useRouter();
   const session = useSession();
-  const toggleVisibility = () => setIsVisible(!isVisible);
-
+  
   useEffect(()=>{
     if(session?.status === "authenticated") {
       router.replace('/')
     }
   },[session,router])
-
+  
   const isValidEmail = (email: string) => {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i;
     return emailRegex.test(email);
   };
-
+  
   const notify = () => toast.error(warning, {
-      // configuring react toastify notifications
-      icon: !warning.includes("successfully") ? <AlertCircle className="text-yellow-400"/> : <CheckCircle className="text-green-600" /> ,
-      style: {
-        borderRadius: "20px",
-        backgroundColor: "#333",
-        color: "#fff",
+    // configuring react toastify notifications
+    icon: !warning?.includes("successfully") ? <AlertCircle className="text-yellow-400"/> : <CheckCircle className="text-green-600" /> ,
+    style: {
+      borderRadius: "20px",
+      backgroundColor: "#333",
+      color: "#fff",
     },
   });
-
+  
   async function handleSubmit(e: any) {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
-
+    
     if (!isValidEmail(email)) {
       setWarning("Email is invalid");
       notify();
       return;
     }
-
+    
     if (!password || password.length < 8) {
       setWarning("Password is invalid");
       notify();
       return;
     }
-
+    
     const res = await signIn("credentials", {
       redirect: false,
       email,
       password
     })
-
+    
     if(res?.error) {
       console.log(res)
       setWarning("Invalid email or password")
@@ -74,6 +72,7 @@ export default function Login() {
     <div className="flex flex-col md:items-center pt-20 px-10 md:px-0 w-full md:w-[400px]">
       {/* <TsParticles/> */}
       <div className="md:w-[600px] md:p-20 md:rounded-md md:backdrop-blur-md md:bg-white/10">
+        <h2 className="text-center text-[30px] font-semibold mb-6">Welcome back!</h2>
         <form onSubmit={handleSubmit} className="flex flex-col space-y-7 ">
           <Input
             isRequired
@@ -95,8 +94,7 @@ export default function Login() {
               inputWrapper: "dark:bg-black dark:text-white bg-white text-black  border-white/80",
               label: "dark:text-white/70 text-black",
             }}
-            className=""
-            type={isVisible ? "text" : "password"}
+            type={"password"}
             name="email"
             variant={"faded"}
             label="Password"

@@ -76,9 +76,17 @@ const authOptions: NextAuthOptions = {
             user: User,
             session: Session
         }) {
-            console.log("jwt callback")
+            console.log("jwt callback", {token,user,session})
             return token;
-
+        },
+        //@ts-ignore
+        async session({session, token, user}:{
+            session: Session,
+            token: JWT,
+            user: User
+        }) {
+            console.log("session callback", {session, token, user})
+            return session
         }
         
     },

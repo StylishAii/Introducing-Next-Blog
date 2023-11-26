@@ -2,7 +2,7 @@
 // import TsParticles from "@/components/TsParticles";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
-import { Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
+import {AlertCircle, CheckCircle } from "lucide-react";
 import React from "react";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -11,7 +11,7 @@ import { signIn } from "next-auth/react";
 
 function Register() {
   const [isVisible, setIsVisible] = React.useState(false);
-  const [warning, setWarning] = React.useState("");
+  const [warning, setWarning] = React.useState<null | string>(null);
   const router = useRouter();
   const isValidEmail = (email: string) => {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i;
@@ -21,7 +21,7 @@ function Register() {
   const notify = () =>
     toast.error(warning, {
       // configuring react toastify notifications
-      icon: !warning.includes("successfully") ? <AlertCircle className="text-yellow-400"/> : <CheckCircle className="text-green-600" /> ,
+      icon: !warning?.includes("successfully") ? <AlertCircle className="text-yellow-400"/> : <CheckCircle className="text-green-600" /> ,
       style: {
         borderRadius: "20px",
         backgroundColor: "#333",
@@ -74,12 +74,12 @@ function Register() {
       console.log(error);
     }
   }
-  const toggleVisibility = () => setIsVisible(!isVisible);
-
   return (
     <div className="flex flex-col md:items-center pt-20 px-10 md:px-0 w-full md:w-[400px]">
       {/* <TsParticles/> */}
       <div className="md:w-[600px] md:p-20 md:rounded-md md:backdrop-blur-md md:bg-white/10">
+        <h2 className="text-center text-[30px] font-semibold ">Register</h2>
+        <p className="text-center text-stone-600 text-xl mb-6">Let{"'"}s get started</p>
         <form className="flex flex-col space-y-7 " onSubmit={handleSubmit}>
           <Input
             isRequired
