@@ -4,6 +4,7 @@ import  GithubProvider from "next-auth/providers/github"
 import  GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials";
 import Users from "@/models/Users";
+import Sessions from "@/models/Session";
 import connect from "@/utils/server-helper";
 import bcrypt from 'bcrypt'
 import { JWT } from "next-auth/jwt";
@@ -51,6 +52,7 @@ const authOptions: NextAuthOptions = {
             else if(account?.provider === "github") {
                 await connect();
                 try{
+                    
                     const existingUser = await Users.findOne({email: user.email});
                     if(!existingUser) {
                         const newUser = new Users({
@@ -71,22 +73,38 @@ const authOptions: NextAuthOptions = {
             }
         },
         //@ts-ignore
-        async jwt({token, user, session}: {
+        async jwt({token,}: {
             token: JWT,
-            user: User,
-            session: Session
         }) {
-            console.log("jwt callback", {token,user,session})
+            console.log("jwt callback", {token,})
             return token;
         },
         //@ts-ignore
-        async session({session, token, user}:{
+        async session({session, token}:{
             session: Session,
             token: JWT,
-            user: User
         }) {
-            console.log("session callback", {session, token, user})
-            return session
+            try{
+                const existingSession = await Sessions.findOne({email: session.user?.email});
+                if(existingSession) {
+                    return session;
+                } else if(!existingSession){
+                    const newSession = new Sessions({
+                        email: session.user?.email,
+                        createdAt: new Date(),
+                        expires: new  Date(session.expires),
+                        accessToken: token.sub,
+                    });
+                    await newSession.save();
+                    return session;
+                
+                }
+                    
+            } catch(err) {  
+                console.log("ERROR saving session", err);
+                return session;
+            }
+            
         }
         
     },
