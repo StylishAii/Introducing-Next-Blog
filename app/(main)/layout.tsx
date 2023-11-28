@@ -6,9 +6,7 @@ import Navbar from "@/components/ui/Navbar";
 import "../globals.css";
 import { getServerSession } from "next-auth";
 import NextThemesProvider from "@/components/NextThemesProvider";
-import AblyClientProvider from "@/components/AblyProvider";
-
-
+import dynamic from "next/dynamic";
 
 const geist = GeistSans;
 
@@ -16,6 +14,10 @@ export const metadata: Metadata = {
   title: "ChatWithMe",
   description: "A next-gen chat app for friends",
 };
+
+const DynamicAblyProvider = dynamic(()=> import('@/components/Ably/AblyProvider'), {
+  ssr:false
+})
 
 export default async function RootLayout({
   children,
@@ -27,16 +29,16 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={geist.className}>
-      {/* <AblyClientProvider> */}
-        <NextUIProv>
-          <NextThemesProvider attribute="class" defaultTheme="dark">
-          <SessionProvider basePath="/api/auth" session={session}>
-            <Navbar/>
-            {children}
-          </SessionProvider>
-          </NextThemesProvider>
-        </NextUIProv>
-      {/* </AblyClientProvider> */}
+        <SessionProvider  session={session}>
+          <DynamicAblyProvider>  {/**`input must not start with prefix url` bug fixed */}
+            <NextUIProv>
+              <NextThemesProvider attribute="class" defaultTheme="dark">
+                <Navbar />
+                {children}
+              </NextThemesProvider>
+            </NextUIProv>
+          </DynamicAblyProvider>
+        </SessionProvider>
       </body>
     </html>
   );
