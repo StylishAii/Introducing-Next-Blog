@@ -1,5 +1,4 @@
 "use client";
-// import TsParticles from "@/components/TsParticles";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
 import {AlertCircle, CheckCircle } from "lucide-react";
@@ -76,7 +75,6 @@ function Register() {
   }
   return (
     <div className="flex flex-col md:items-center pt-20 px-10 md:px-0 w-full md:w-[400px]">
-      {/* <TsParticles/> */}
       <div className="md:w-[600px] md:p-20 md:rounded-md md:backdrop-blur-md md:bg-white/10">
         <h2 className="text-center text-[30px] font-semibold ">Register</h2>
         <p className="text-center text-stone-600 text-xl mb-6">Let{"'"}s get started</p>
