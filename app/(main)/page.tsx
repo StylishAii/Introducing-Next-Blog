@@ -1,4 +1,5 @@
 "use client"
+import UserGreetings from "@/components/client/UserGreetings";
 import { useSession } from "next-auth/react"
 
 export default function Home() {
@@ -7,7 +8,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className='mt-10 flex flex-col'>
         {session ? (
-          <h1>Hello, <strong><u>{session.user?.name}</u></strong>. Feel yourself like at home {')'}</h1>
+          <UserGreetings/>
         ): (
           <h1>Please Log in</h1>
         )}
