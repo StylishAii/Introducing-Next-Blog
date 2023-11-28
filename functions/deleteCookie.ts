@@ -1,6 +1,6 @@
 "use server"
 import {cookies} from 'next/headers'
-
-async function deleteJwtCookie(data){
+//@ts-ignore
+async function deleteJwtCookie(data:any){
     cookies().delete("nxt-auth-jwt")
 }
