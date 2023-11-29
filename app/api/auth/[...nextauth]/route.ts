@@ -84,6 +84,11 @@ const authOptions: NextAuthOptions = {
             session: Session,
             token: JWT,
         }) {
+            /**
+             * Always use connect() before operating any process on your MongoDB database with Mongoose server
+             * 
+            */
+            await connect(); 
             try{
                 const existingSession = await Sessions.findOne({email: session.user?.email});
                 if(existingSession) {
