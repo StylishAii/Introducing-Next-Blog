@@ -27,7 +27,7 @@ export function AuthButton() {
         <nav className="dark:bg-black p-3 flex items-center  w-full justify-between sm:px-[100px] min-md:px-[300px] max-md:[400px]">
           <Link href={"/"}>
             {
-              theme === "dark" ? <Image className="hover:opacity-60 duration-100" width={190} src={LightLogo} alt={"light_logo"} /> : <Image className="hover:opacity-60 duration-100" width={190}  src={DarkLogo} alt={"dark_logo"}  />
+              theme === "dark" ? <Image className="hover:opacity-60 duration-100" width={170} src={LightLogo} alt={"light_logo"} /> : <Image className="hover:opacity-60 duration-100" width={170}  src={DarkLogo} alt={"dark_logo"}  />
             }
           </Link>
           {!session ? <AuthButton /> : <UserDropMenu/> }
