@@ -8,7 +8,7 @@ function UserDropMenu() {
     const router = useRouter();
 
     function handleClick() {
-      router.push('settings')
+      router.push('/settings')
     }
   return (
     <Dropdown className="bg-[#403f3f] dark:bg-[#2b2b2b]" placement="bottom-start">
