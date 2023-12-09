@@ -3,8 +3,8 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { Button } from "@nextui-org/react";
-import DarkLogo from '@/public/dark-logo-01.svg'
-import LightLogo from '@/public/light-logo-01.svg'
+import DarkLogo from '@/public/darkLogo.svg'
+import LightLogo from '@/public/lightLogo.svg'
 import Image  from "next/image"
 import Link from "next/link";
 import UserDropMenu from "./UserDropMenu";
