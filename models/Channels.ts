@@ -2,12 +2,12 @@ import mongoose, { Schema } from "mongoose";
 
 const ChannelSchema = new Schema(
   {
-    _id: { type: String, required: true },
-    name: { type: String, required: true },
-    description: { type: String, required: true },
+    chnl_id:{type: String, required: true},
+    chnl_name: { type: String, required: true },
+    chnl_desc: { type: String, required: true },
     category: { type: String, required: true },
   },
-  { timestamps: true, _id:false }
+  { timestamps: true }
 );
 
 export default mongoose.models.Channel ||

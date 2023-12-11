@@ -11,7 +11,7 @@ type TChannel ={
 
 export async function POST(req:NextRequest, res:NextResponse) {
     const formData = await req.formData();
-    const { chnl_id, chnl_name, chnl_desc, category } = formData as unknown as TChannel;
+    const {category,chnl_desc,chnl_id,chnl_name} = Object.fromEntries(formData.entries()) as TChannel;
 
     await connect();
     const existing_channel = await Channels.findOne({chnl_id});
