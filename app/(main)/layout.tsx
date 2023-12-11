@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { RecoilRoot } from "recoil";
+import  RecoilRoot  from "@/components/RecoilProvider";
 import { GeistSans } from "geist/font";
 import SessionProvider from "@/components/AuthProvider";
 import NextUIProv from "@/components/NextUIProv";
