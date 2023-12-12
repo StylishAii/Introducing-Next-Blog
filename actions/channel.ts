@@ -14,12 +14,12 @@ type TChannel ={
     category: string,
 };
 
-export async function create(formData: FormData) {
+export async function create(email:string | null | undefined,formData: FormData) {
     await connect();
     const {category,chnl_desc,chnl_id,chnl_name} = Object.fromEntries(formData.entries()) as TChannel;
     
     
-    if(!chnl_id || !chnl_name || !chnl_desc || !category) {
+    if(!chnl_id || !chnl_name || !chnl_desc || !category|| !email) {
         return { error: 'Invalid Data' }
     }
 
@@ -30,6 +30,7 @@ export async function create(formData: FormData) {
 
     const newChannel = new Channels({
         chnl_id: chnl_id,
+        createdBy: email,
         chnl_name: chnl_name,
         chnl_desc: chnl_desc,
         category: category,

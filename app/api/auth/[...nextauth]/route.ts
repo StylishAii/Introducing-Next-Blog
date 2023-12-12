@@ -76,7 +76,6 @@ const authOptions: NextAuthOptions = {
         async jwt({token,}: {
             token: JWT,
         }) {
-            console.log("jwt callback", {token,})
             return token;
         },
         //@ts-ignore

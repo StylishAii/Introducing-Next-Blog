@@ -6,9 +6,7 @@ const tokenCache = new Map();
 export async function POST(req: NextRequest) {
    // Check if the token is already in the cache
    const clientId = req.headers.get('clientId')?.toString() || "NO_CLIENT_ID";
-   if (tokenCache.has(clientId)) {
-     return NextResponse.json(tokenCache.get(clientId));
-   }
+   
 
   if (!process.env.ABLY_API_KEY) {
     return NextResponse.json({ errorMessage: `Missing ABLY_API_KEY environment variable.
@@ -22,11 +20,15 @@ export async function POST(req: NextRequest) {
         })
       });
   }
+  if (tokenCache.has(clientId)) {
+      return NextResponse.json(tokenCache.get(clientId));
+    } else {
+        const client = new Ably.Rest(process.env.ABLY_API_KEY!);
+        const tokenRequestData = await client.auth.createTokenRequest({ clientId: clientId });
+        // Cache the generated token
+        tokenCache.set(clientId, tokenRequestData);
 
-  const client = new Ably.Rest(process.env.ABLY_API_KEY);
-  const tokenRequestData = await client.auth.createTokenRequest({ clientId: clientId });
-   // Cache the generated token
-   tokenCache.set(clientId, tokenRequestData);
+        return NextResponse.json(tokenRequestData);
 
-   return NextResponse.json(tokenRequestData);
+    }
 }
