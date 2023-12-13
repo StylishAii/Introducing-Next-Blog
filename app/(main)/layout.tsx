@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from '@vercel/analytics/react';
 import  RecoilRoot  from "@/components/RecoilProvider";
 import { GeistSans } from "geist/font";
 import SessionProvider from "@/components/AuthProvider";
@@ -37,6 +38,7 @@ export default async function RootLayout({
                 <NextThemesProvider attribute="class" defaultTheme="dark">
                   <Navbar />
                   {children}
+                  <Analytics />
                 </NextThemesProvider>
               </NextUIProv>
             </DynamicAblyProvider>
