@@ -20,6 +20,7 @@
     "geist": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.292.0",
+    "million": "^2.6.4",
     "mongodb": "^6.2.0",
     "mongoose": "^8.0.0",
     "next": "14.0.1",
