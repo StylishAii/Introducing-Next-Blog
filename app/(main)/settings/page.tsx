@@ -4,11 +4,8 @@ import { useEffect, useState } from "react";
 import { Switch } from "@nextui-org/react";
 import { montserrat } from "@/fonts";
 import { Moon, Sun } from "lucide-react";
-import { block } from "million/react";
 
-//@ts-ignore
-// million-ignore
-const SettingsBlock = block(function Settings() {
+function Settings() {
   const { setTheme } = useTheme();
   const theme = localStorage.getItem("theme");
   useEffect(() => {}, [theme]);
@@ -52,6 +49,6 @@ const SettingsBlock = block(function Settings() {
       </section>
     </main>
   );
-});
+};
 
-export default SettingsBlock;
+export default Settings;
