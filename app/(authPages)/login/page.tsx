@@ -5,11 +5,12 @@ import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
+import { AlertCircle, CheckCircle } from "lucide-react";
 import { useSession, signIn } from "next-auth/react";
+import Logo from '@/public/darkLogo.svg'  
+import Image from "next/image";
   
-  
-  export default function Login() {
+export default function Login() {
   const [warning, setWarning] = React.useState<null | string>(null)
   const router = useRouter();
   const session = useSession();
@@ -68,8 +69,9 @@ import { useSession, signIn } from "next-auth/react";
     }
   }
   return (
-    <div className="flex flex-col md:items-center pt-20 px-10 md:px-0 w-full md:w-[400px]">
+    <div className="flex flex-col md:items-center pt-0 px-10 md:px-0 w-full md:w-[400px]">
       <div className="md:w-[600px] md:p-20 md:rounded-md md:backdrop-blur-md md:bg-white/10">
+        <Image className="mx-auto" src={Logo} alt="logo" width={270}/>
         <h2 className="text-center text-[30px] font-semibold mb-6">Welcome back!</h2>
         <form onSubmit={handleSubmit} className="flex flex-col space-y-7 ">
           <Input
