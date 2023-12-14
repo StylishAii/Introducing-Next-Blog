@@ -1,34 +1,34 @@
 "use client";
 import { Input, Button } from "@nextui-org/react";
-import React, { FormEvent } from "react";
+import React from "react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { channel_categories } from "@/data/categories";
 import { useFormStatus } from "react-dom";
 import { createChannelID } from "@/lib/createChannelD";
 import {create} from '@/actions/channel';
 import { useSession } from "next-auth/react";
-import {useAbly} from "ably/react"
+import { useRouter } from "next/navigation";
 
-function SubmitButton({onSubmit}:{onSubmit: (e: FormEvent<Element>) => void}) {
+function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button onSubmit={onSubmit} type="submit" aria-disabled={pending}>
+    <Button type="submit" aria-disabled={pending}>
       Create
     </Button>
   );
 }
 
 function CreateChannel() {
+  const router = useRouter();
   const { data: session } = useSession();
   const [name, setName] = React.useState("");
   const [id, setID] = React.useState("");
-  const client = useAbly();
-  const channel = client.channels.get(name);
-
+  
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    channel.attach()
+    router.push('/')
+    
   }
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -44,7 +44,7 @@ function CreateChannel() {
   return (
     <section className="flex flex-col  md:items-center pt-20 px-10  w-full min-h-screen  ">
       <h2 className="text-xl font-bold mb-14">Create a channel</h2>
-      <form className="space-y-10 md:w-[500px]" action={createwithEmail}>
+      <form onSubmit={handleSubmit} className="space-y-10 md:w-[500px]" action={createwithEmail}>
         <Input
           value={id}
           isReadOnly={true}
@@ -107,7 +107,7 @@ function CreateChannel() {
             </AutocompleteItem>
           )}
         </Autocomplete>
-        <SubmitButton onSubmit={handleSubmit}/>
+        <SubmitButton/>
       </form>
     </section>
   );
