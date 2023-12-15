@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { Button, Tooltip } from "@nextui-org/react";
 import {FiPlus} from "react-icons/fi"
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function UserGreetings() {
   const { data: session } = useSession();
@@ -21,7 +22,7 @@ function UserGreetings() {
       </div>
 
       <p className="dark:bg-red-200 dark:text-red-600 bg-red-100 text-red-500 font-semibold p-1 px-2 text-center rounded-md">
-        It seems like you don{"'"}t have any channels yet.
+        It seems like you haven{"'"}t subscribed to any channels yet. <Link href={'/channels'} className="underline underline-offset-2">Browse the channels</Link>
       </p>
       <Tooltip 
       showArrow
