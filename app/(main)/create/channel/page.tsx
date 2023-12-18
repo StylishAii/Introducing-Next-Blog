@@ -44,7 +44,7 @@ function CreateChannel() {
   return (
     <section className="flex flex-col  md:items-center pt-20 px-10  w-full min-h-screen  ">
       <h2 className="text-xl font-bold mb-14">Create a channel</h2>
-      <form onSubmit={handleSubmit} className="space-y-10 md:w-[500px]" action={createwithEmail}>
+      <form  className="space-y-10 md:w-[500px]" action={createwithEmail}>
         <Input
           value={id}
           isReadOnly={true}
