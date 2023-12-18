@@ -17,7 +17,7 @@ export type TChannel = {
 function ChannelsView({ channels }: { channels: TChannel[] }) {
   
   return (
-    <ul className="flex flex-col space-y-5 items-center">
+    <ul className="flex flex-col space-y-5 items-center pb-6">
       {channels.map((channels) => (
         <Link key={channels._id} href={`/channels/${channels._id}`}>
           <Badge  isInvisible={isNewChannel(`${channels.createdAt}`)} content="New" placement="top-left"  color="danger" size="sm">
