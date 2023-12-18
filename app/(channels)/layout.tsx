@@ -11,7 +11,10 @@ import Navbar from "@/components/ui/Navbar";
 const geist = GeistSans;
 
 export const metadata: Metadata = {
-  title: "Channels - ChatWithMe",
+  title: {
+    template: "%s | ChatWithMe",
+    default:"Channels | ChatWithMe"
+  },
   description: "A next-gen chat app for friends",
 };
 
