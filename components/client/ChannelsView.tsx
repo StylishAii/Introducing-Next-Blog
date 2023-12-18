@@ -20,7 +20,7 @@ function ChannelsView({ channels }: { channels: TChannel[] }) {
     <ul className="flex flex-col space-y-5 items-center">
       {channels.map((channels) => (
         <Link key={channels._id} href={`/channels/${channels._id}`}>
-          <Badge  isInvisible={isNewChannel(new Date(`${channels.createdAt}`))} content="New" placement="top-left"  color="danger" size="sm">
+          <Badge  isInvisible={isNewChannel(`${channels.createdAt}`)} content="New" placement="top-left"  color="danger" size="sm">
             <li
               key={channels._id}
               className="pt-3 bg-gradient-to-br dark:from-[#2f2f2f] dark:via-red-200/10 dark:to-[#ffeffe]/30 flex flex-col space-y-2 w-full md:w-[600px] py-2 px-5 rounded-lg border hover:drop-shadow-xl shadow-white transition hover:opacity-70 hover:scale-[0.995]  ease-in-out duration-300 border-[#ffbffb]/30"
