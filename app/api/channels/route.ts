@@ -2,20 +2,37 @@ import { NextRequest, NextResponse } from "next/server";
 import connect from "@/utils/server-helper";
 import Channels from "@/models/Channels";
 
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
   await connect();
+  const rs = req.nextUrl.searchParams.get("id");
 
-  try {
-    const channels = mergeSort(await Channels.find({}));
+  if(rs) {
+    try {
+      const channel = await Channels.findById(rs);
 
-    return NextResponse.json(channels, { status: 200 });
-  } catch (err) {
-    console.log(err);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
-  }
+      if(!channel) {
+        return NextResponse.json({ error: "Channel not found" }, { status: 404 });
+      }
+
+      return NextResponse.json(channel, { status: 200 });
+    } catch (err) {
+      console.log(err);
+      return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    }
+  } else {
+      try {
+        const channels = mergeSort(await Channels.find({}));
+    
+        return NextResponse.json(channels, { status: 200 });
+      } catch (err) {
+        console.log(err);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+      }
+    }
+
 };
 
-export const mergeSort = function(arr:  any[]) {
+const mergeSort = function(arr:  any[]) {
   if(arr.length <= 1) return arr; //base case
   let middle = Math.floor(arr.length / 2);
   let leftArray  = arr.slice(0, middle);
