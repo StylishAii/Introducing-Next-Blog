@@ -14,9 +14,10 @@ interface PageProps {
 }
 
 function ChannelView({params}:{params: PageProps}) {
+  const {_id,category,chnl_desc,chnl_id,chnl_name,createdAt,createdBy} = params;
   return (
     <div>
-        <h1>{params._id}</h1>
+        <h1 className='text-white text-2xl'>{_id}</h1>
     </div>
   )
 }
