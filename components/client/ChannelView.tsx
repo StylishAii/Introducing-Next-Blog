@@ -1,23 +1,28 @@
 "use client"
-import React from 'react'
-import { useParams } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import { TChannel } from './ChannelsView';
 
 interface PageProps {
-    _id: string;
-    chnl_id: string;
-    chnl_name: string;
-    chnl_desc: string;
-    category: string;
-    createdAt: Date;
-    createdBy: string;
-
+   id: string
 }
 
 function ChannelView({params}:{params: PageProps}) {
-  const {_id,category,chnl_desc,chnl_id,chnl_name,createdAt,createdBy} = params;
+  const [channelinfo, setChannelInfo] = useState<TChannel | null>(null)
+  const {id} = params;
+  useEffect(()=>{
+    const getChannel = async() =>{
+      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/channels?id=${id}`,{cache:"no-cache"});
+      const data:TChannel = await res.json();
+      setChannelInfo(data)
+      console.log(data)
+    }
+    
+    getChannel();
+  },[id])
+
   return (
     <div>
-        <h1 className='text-white text-2xl'>{_id}</h1>
+        <h1 className='text-white text-2xl'>{channelinfo?.chnl_name}</h1>
     </div>
   )
 }
