@@ -20,6 +20,9 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
+  /**
+       * need to include 'NEXTAUTH_URL` env variable here as it is a server component
+       */
   const res = await fetch(`${process.env.NEXTAUTH_URL}/api/channels`,{cache:"no-cache"});
   const data: TChannel[] = await res.json();
   return data.map((channel) => ({
@@ -29,7 +32,7 @@ export async function generateStaticParams() {
 
 const Page: FC<PageProps> = ({params}) => {
   return (
-    <main className="pt-10 w-4/5 min-h-screen">
+    <main className="pt-4 w-4/5 min-h-screen">
       <section className="flex flex-col mt-15">
         <ChannelView params={params}/>
       </section>
