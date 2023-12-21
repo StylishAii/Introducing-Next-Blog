@@ -12,13 +12,27 @@ datasource db {
 
 model User {
   id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
   email           String      @unique
-  hashedPassword  String?
+  password        String?
   createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
   emailVerified   DateTime?   @map("verifiedAt")
   sessions        Session[]
-  name            String
   @@map("users")
+}
+
+model Channel{
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  chnl_id         String      @unique
+  created_by      String
+  name            String
+  description     String
+  category        String      @default("social")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  @@map("channels")
+
 }
  
 model Session {
@@ -32,9 +46,10 @@ model Session {
  
 model VerificationToken {
   id              String      @id @default(auto()) @map("_id") @db.ObjectId
-  identifier      String
-  token           String      @unique
-  expires         DateTime    @map("expiresAt")
-  @@unique([identifier, token])
+  email           String
+  identifier      String?
+  accessToken     String?     @unique
+  expires         DateTime?    @map("expiresAt")
+  @@unique([identifier, accessToken])
   @@map("verification_tokens")
 }
