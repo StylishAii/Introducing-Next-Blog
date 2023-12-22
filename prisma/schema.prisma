@@ -14,7 +14,7 @@ model User {
   id              String      @id @default(auto()) @map("_id") @db.ObjectId
   name            String
   email           String      @unique
-  password        String?
+  password        String      @default("")
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
   emailVerified   DateTime?   @map("verifiedAt")
@@ -37,6 +37,7 @@ model Channel{
  
 model Session {
   id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  email           String      @unique
   sessionToken    String      @unique
   userId          String      @db.ObjectId
   expires         DateTime    @map("expiresAt")
