@@ -31,21 +31,21 @@ function CreateChannel() {
   
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const res = await fetch(`/api/create`, {
+    const res = await fetch("/api/create", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+      headers:{
+        "Content-Type":"application/json"
       },
       body: JSON.stringify({
         chnl_id: id,
         chnl_name: name,
         chnl_desc: desc,
         category: selected,
-        created_by: session?.user?.email,
+        createdBy: session?.user?.email,
       }),
     });
     console.log(res)
-    if(res.status === 200) {
+    if(res.ok) {
       const {message} = await res.json();
       toast.success(`${message}`,{
         icon: <CheckCircle className="text-green-600"/>,
@@ -70,16 +70,14 @@ function CreateChannel() {
     }
     
   }
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, name: string) {
+  function handleName(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    switch (name) {
-      case "name":
-        setName(e.target.value);
-        break;
-      case "desc":
-        setDescription(e.target.value);
-        break;
-    }
+    setName(e.target.value);
+  }
+
+  function handleDescription(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    setDescription(e.target.value);
   }
 
   function onInputChange(value: string) {
@@ -113,7 +111,7 @@ function CreateChannel() {
         />
         <Input
           isRequired
-          onChange={(e) => handleChange(e, "name")}
+          onChange={handleName}
           name="chnl_name"
           variant="faded"
           classNames={{
@@ -130,7 +128,7 @@ function CreateChannel() {
           isRequired
           name="chnl_desc"
           variant="faded"
-          onChange={(e) => handleChange(e, "desc")}
+          onChange={handleDescription}
           classNames={{
             inputWrapper:
               "h-[50px] dark:bg-neutral-800 dark:text-white bg-neutral-200 text-black",
