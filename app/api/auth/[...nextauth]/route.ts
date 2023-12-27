@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import {PrismaAdapter} from "@auth/prisma-adapter"
 import NextAuth, {NextAuthOptions, Account, User,Session} from "next-auth"
 import  GithubProvider from "next-auth/providers/github"
 import  GoogleProvider from "next-auth/providers/google"
@@ -9,11 +8,8 @@ import Sessions from "@/models/Session";
 import connect from "@/utils/server-helper";
 import bcrypt from 'bcrypt'
 import { JWT } from "next-auth/jwt";
-
-const prisma = new PrismaClient()
-
 const authOptions: NextAuthOptions = {
-    adapter: PrismaAdapter(prisma),
+    // adapter: PrismaAdapter(prisma),
     providers: [
         GithubProvider({
             clientId: process.env.GITHUB_ID!,
@@ -30,28 +26,16 @@ const authOptions: NextAuthOptions = {
                 email: {label:"Email", type:"text"},
                 password: {label: "Password", type:"text"}
             },
-            async authorize(credentials) {
-
-                if(!credentials?.email || !credentials.password){
-                    return null
-                }
-                await  prisma.$connect()
+            async authorize(credentials:any) {
+                await  connect();
                 try{
-                    const user = await prisma.user.findUnique({
-                        where:{
-                            email:credentials.email
+                    const user = await Users.findOne({email: credentials.email})
+                    if(user) {
+                        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
+                        if(isPasswordCorrect) {
+                            return user;
                         }
-                    })
-
-                    if(!user) {
-                        return null;
                     }
-
-                    const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
-                    if(isPasswordCorrect) {
-                        return user;
-                    }
-                    return null;                
                 } catch(err) {
                     throw new Error("Error happened!")
                 }
@@ -62,26 +46,19 @@ const authOptions: NextAuthOptions = {
         // @ts-ignore
         async signIn({user, account}: {user:User, account: Account}) {
             if(account?.provider === "credentials") {
-                return user;
+                return true;
             }
             else if(account?.provider === "github") {
+                await connect();
                 try{
                     
-                    const existingUser = await prisma.user.findUnique({where:{
-                        email: user.email ?? ""
-                    }});
+                    const existingUser = await Users.findOne({email: user.email});
                     if(!existingUser) {
-                        // const newUser = new Users({
-                        //     email: user.email,
-                        //     name: user.name
-                        // });
-                        await prisma.user.create({
-                            data:{
-                                 email: user.email ?? "",
-                                 name: user.name ?? ""
-                            }
-                        })
-
+                        const newUser = new Users({
+                            email: user.email,
+                            name: user.name
+                        });
+                        await newUser.save();
                         return true;
                     }
                     if(existingUser){
@@ -94,41 +71,34 @@ const authOptions: NextAuthOptions = {
             }
         },
         //@ts-ignore
-        async jwt({token, user}: {
+        async jwt({token,}: {
             token: JWT,
-            user: User
         }) {
-            return token
+            console.log("jwt callback", {token,})
+            return token;
         },
         //@ts-ignore
-        async session({session, user, token}:{
+        async session({session, token}:{
             session: Session,
-            user: User,
-            token: JWT
+            token: JWT,
         }) {
-            console.log(session)
             /**
              * Always use connect() before operating any process on your MongoDB database with Mongoose server
              * 
             */
-            await prisma.$connect();
+            await connect(); 
             try{
-                const existingSession = await prisma.session.findFirst({
-                    where:{
-                        sessionToken: token.sub
-                    }
-                });
+                const existingSession = await Sessions.findOne({email: session.user?.email});
                 if(existingSession) {
                     return session;
                 } else if(!existingSession){
-                    await prisma.session.create({
-                        data:{
-                            email: token.email ?? "",
-                            sessionToken: token.sub ?? "",
-                            expires: new Date(session.expires),
-                            userId: user.email ?? ""
-                        }
-                    })
+                    const newSession = new Sessions({
+                        email: session.user?.email,
+                        createdAt: new Date(),
+                        expires: new  Date(session.expires),
+                        accessToken: token.sub,
+                    });
+                    await newSession.save();
                     return session;
                 
                 }
@@ -147,8 +117,5 @@ const authOptions: NextAuthOptions = {
     },
     debug: true,
 }
-
 const handler = NextAuth(authOptions);
-
-
 export {handler as GET, handler as POST};

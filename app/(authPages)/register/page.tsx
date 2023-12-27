@@ -131,8 +131,8 @@ function Register() {
           <Link href={"/login"}>Log in with an existing account</Link>
         </div>
         <div className="flex justify-between gap-x-3">
-          <Button onClick={()=>signIn("google")} className="py-5" fullWidth variant="solid" ><FaGoogle className="w-6 h-10"/></Button>
-          <Button onClick={()=>signIn("github")} className="py-5" fullWidth variant="solid"> <FaGithub className="w-6 h-6"/></Button>
+          <Button onClick={()=>signIn("google",{callbackUrl:"/"})} className="py-5" fullWidth variant="solid" ><FaGoogle className="w-6 h-10"/></Button>
+          <Button onClick={()=>signIn("github",{callbackUrl:"/" })} className="py-5" fullWidth variant="solid"> <FaGithub className="w-6 h-6"/></Button>
         </div>
       </div>
       <Toaster position="top-right" />
