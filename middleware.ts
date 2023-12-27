@@ -13,5 +13,5 @@ export function middleware(request: NextRequest) {
  
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/settings", "/channels/:path*"],
+  matcher: ["/settings", "/channels/:path* ", "/create/:path*"],
 }
