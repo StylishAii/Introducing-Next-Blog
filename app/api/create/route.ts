@@ -1,5 +1,6 @@
 import Channels from "@/models/Channels";
 import connect from "@/utils/server-helper";
+import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 type TChannel = {
@@ -12,7 +13,7 @@ type TChannel = {
 
 export async function POST(req: NextRequest, res: NextResponse) {
   await connect();
-  const { chnl_id, chnl_name, chnl_desc, category, createdBy } = req.json() as unknown as TChannel;
+  const { chnl_id, chnl_name, chnl_desc, category, createdBy } = await req.json() as unknown as TChannel;
   const existing_channel = await Channels.findOne({chnl_id: chnl_id});
   if (existing_channel) {
     //if there is an existing channel with the same Channel ID
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     await newChannel.save();
     return NextResponse.json(
-      { message: "Channel is created" },
+      { message: "Channel is created", redirectURL: "/channels" },
       { status: 200 }
     );
   } catch (error) {
