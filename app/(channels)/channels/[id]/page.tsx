@@ -25,10 +25,10 @@ export async function generateStaticParams() {
   /**
        * need to include 'NEXTAUTH_URL` env variable here as it is a server component
        */
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/channels`);
-  const data: TChannel[] = await res.json();
+  await connect();
+  const data: TChannel[] = await Channels.find({})
   return data.map((channel) => ({
-    id: channel._id
+    id: channel._id.toString()
   }));
 }
 
