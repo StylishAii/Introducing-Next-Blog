@@ -1,16 +1,18 @@
 import ChannelView from "@/components/client/ChannelView";
 import { TChannel } from "@/components/client/ChannelsView";
+import Channels from "@/models/Channels";
+import connect from "@/utils/server-helper";
 import { Metadata } from "next";
 import { FC } from "react";
 
 export async function generateMetadata({params}: {params: {id:string}}) {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/channels?id=${params.id}`);
-  const data: TChannel = await res.json();
+  await connect()
+  const data: TChannel | null = await Channels.findById(params.id);
     return {
-        title: `${data.chnl_name}`,
-        description: `${data.chnl_desc}`,
-        creator: `${data.createdBy}`,
-        keywords: `${data.category}`,
+        title: `${data?.chnl_name}`,
+        description: `${data?.chnl_desc}`,
+        creator: `${data?.createdBy}`,
+        keywords: `${data?.category}`,
     } as Metadata
 }
 interface PageProps {
