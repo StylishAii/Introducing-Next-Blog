@@ -65,17 +65,17 @@ function ChannelView({ params }: { params: PageProps }) {
             <Share2 size={20} />
           </Button>
           <Modal
-            backdrop="opaque"
+            backdrop="blur"
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             radius="lg"
             classNames={{
-              body: "py-6",
-              backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-              base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
+              body: "py-6 px-2",
+              backdrop: "bg-[#292f46]/60 backdrop-opacity-80",
+              base: "border-[#292f46] border-2 bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
               header: "border-b-[1px] border-[#292f46]",
               footer: "border-t-[1px] border-[#292f46]",
-              closeButton: "hover:bg-white/5 active:bg-white/10",
+              closeButton: "hover:bg-white/5 active:bg-white/10 bg-white/10",
             }}
           >
             <ModalContent>{(onClose)=>(
