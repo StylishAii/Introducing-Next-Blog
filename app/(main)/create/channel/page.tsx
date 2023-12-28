@@ -7,7 +7,7 @@ import { useFormStatus } from "react-dom";
 import { createChannelID } from "@/lib/createChannelD";
 import {create} from '@/actions/channel';
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import toast,{ Toaster } from "react-hot-toast";
 import { AlertCircle, CheckCircle } from "lucide-react";
 
@@ -46,7 +46,7 @@ function CreateChannel() {
     });
     console.log(res)
     if(res.ok) {
-      const {message} = await res.json();
+      const {message, redirectURL} = await res.json();
       toast.success(`${message}`,{
         icon: <CheckCircle className="text-green-600"/>,
         duration:2700,
@@ -55,7 +55,10 @@ function CreateChannel() {
           backgroundColor: "#333",
           color: "#fff",
         },
-      })
+      });
+      setTimeout(()=>{
+        router.push(redirectURL) // after receiving `URL`, redirect the user to the according path 
+      },2800)
     } else {
       const {message} = await res.json();
       toast.error(`${message}`, {
