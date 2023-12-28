@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import  RecoilRoot  from "@/components/RecoilProvider";
 import { GeistSans } from "geist/font";
 import SessionProvider from "@/components/AuthProvider";
@@ -39,6 +40,7 @@ export default async function RootLayout({
                   <Navbar />
                   {children}
                   <Analytics />
+                  <SpeedInsights />
                 </NextThemesProvider>
               </NextUIProv>
             </DynamicAblyProvider>

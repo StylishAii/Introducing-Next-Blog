@@ -16,6 +16,7 @@
     "@prisma/client": "^5.7.1",
     "@supabase/supabase-js": "^2.38.4",
     "@vercel/analytics": "^1.1.1",
+    "@vercel/speed-insights": "^1.0.2",
     "ably": "^1.2.48",
     "bcrypt": "^5.1.1",
     "framer-motion": "^10.16.4",
