@@ -3,8 +3,8 @@ import { TChannel } from "@/components/client/ChannelsView";
 import { Metadata } from "next";
 import { FC } from "react";
 
-export async function generateMetadata({params}: {params: {id:number}}) {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/channels?id=${params.id}`,{cache:"no-cache"});
+export async function generateMetadata({params}: {params: {id:string}}) {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/channels?id=${params.id}`);
   const data: TChannel = await res.json();
     return {
         title: `${data.chnl_name}`,
@@ -23,7 +23,7 @@ export async function generateStaticParams() {
   /**
        * need to include 'NEXTAUTH_URL` env variable here as it is a server component
        */
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/channels`,{cache:"no-cache"});
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/channels`);
   const data: TChannel[] = await res.json();
   return data.map((channel) => ({
     id: channel._id
