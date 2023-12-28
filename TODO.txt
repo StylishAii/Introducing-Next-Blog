@@ -1,7 +1,14 @@
 - Replace the server-helper function with mongoose ✅
 - Dark/Light mode ✅
 - Fix Login screen password input show password button, there is a bug ✅
-- Add jwt session strategy 🔨
+- Add jwt session strategy ✅
+- Feature ✨: Creating a channel 🔨
+- Feature ✨: Chatting
+- Use Prisma instead of Mongoose
+
+🔴 Unexpexted Error occured while querying all channels by Mongoose scheme. So, I should start from scratch, by using Prisma with mongodb server;
+
+
 
 
 Vercel:

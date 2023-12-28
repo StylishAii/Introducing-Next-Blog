@@ -1,11 +1,12 @@
 import connect from '@/utils/server-helper';
+import prisma from '@/prisma';
 import Users from '@/models/Users';
 import {NextResponse} from 'next/server'
 import bcrypt from 'bcrypt';
 
 export const POST = async(req: Request)=>{
-    const{name,email,password} = await req.json();
     await connect();
+    const {name,email,password} = await req.json();
     const existingUser = await Users.findOne({email})
     
     if(existingUser) { //if there is an existing user with the same email

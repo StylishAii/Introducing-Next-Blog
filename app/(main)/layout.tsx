@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Analytics } from '@vercel/analytics/react';
+import  RecoilRoot  from "@/components/RecoilProvider";
 import { GeistSans } from "geist/font";
 import SessionProvider from "@/components/AuthProvider";
 import NextUIProv from "@/components/NextUIProv";
@@ -29,16 +31,19 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={geist.className}>
-        <SessionProvider  session={session}>
-          <DynamicAblyProvider>  {/**`input must not start with prefix url` bug fixed */}
-            <NextUIProv>
-              <NextThemesProvider attribute="class" defaultTheme="dark">
-                <Navbar />
-                {children}
-              </NextThemesProvider>
-            </NextUIProv>
-          </DynamicAblyProvider>
-        </SessionProvider>
+        <RecoilRoot>
+          <SessionProvider  session={session}>
+            <DynamicAblyProvider>  {/**`input must not start with prefix url` bug fixed */}
+              <NextUIProv>
+                <NextThemesProvider attribute="class" defaultTheme="dark">
+                  <Navbar />
+                  {children}
+                  <Analytics />
+                </NextThemesProvider>
+              </NextUIProv>
+            </DynamicAblyProvider>
+          </SessionProvider>
+        </RecoilRoot>
       </body>
     </html>
   );

@@ -8,7 +8,6 @@ import Sessions from "@/models/Session";
 import connect from "@/utils/server-helper";
 import bcrypt from 'bcrypt'
 import { JWT } from "next-auth/jwt";
-
 const authOptions: NextAuthOptions = {
     // adapter: PrismaAdapter(prisma),
     providers: [
@@ -59,7 +58,6 @@ const authOptions: NextAuthOptions = {
                             email: user.email,
                             name: user.name
                         });
-
                         await newUser.save();
                         return true;
                     }
@@ -119,8 +117,5 @@ const authOptions: NextAuthOptions = {
     },
     debug: true,
 }
-
 const handler = NextAuth(authOptions);
-
-
 export {handler as GET, handler as POST};
