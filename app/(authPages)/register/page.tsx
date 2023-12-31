@@ -12,10 +12,7 @@ function Register() {
   const [isVisible, setIsVisible] = React.useState(false);
   const [warning, setWarning] = React.useState<null | string>(null);
   const router = useRouter();
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i;
-    return emailRegex.test(email);
-  };
+ 
 
   const notify = () =>
     toast.error(warning, {
@@ -34,44 +31,45 @@ function Register() {
     const email = e.target[1].value;
     const password = e.target[2].value;
 
-    if (!isValidEmail(email)) {
-      setWarning("Email is invalid");
-      return;
-    }
-
-    if (!password || password.length < 8) {
-      setWarning("Password is invalid");
-      return;
-    };
-
-    try {
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+      }),
+    });
+    
+    if(res.ok) {
+      const {message, redirectURL} = await res.json();
+      toast.success(`${message}`,{
+        icon: <CheckCircle className="text-green-600"/>,
+        duration:2700,
+        style: {
+          borderRadius: "20px",
+          backgroundColor: "#333",
+          color: "#fff",
         },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
       });
-      if (res.status === 400) {
-        setWarning("This user is already registered");
-          notify()
-      }
-
-      if (res.status === 200) {
-        setWarning("User successfully registered");
-        notify()
-        setTimeout(()=>{
-            router.push('/login')
-        },3000 )
-      }
-    } catch (error) {
-      setWarning("Error, try again");
-      console.log(error);
+      setTimeout(()=>{
+        router.push(redirectURL) // after receiving `URL`, redirect the user to the according path 
+      },2800)
+    } else {
+      const {message} = await res.json();
+      toast.error(`${message}`, {
+        icon: <AlertCircle className="text-red-600" />,
+        duration:2700,
+        style: {
+          borderRadius: "20px",
+          backgroundColor: "#fff",
+          color: "#222"
+        },
+      })
     }
+
   }
   return (
     <div className="flex flex-col md:items-center pt-20 px-10 md:px-0 w-full md:w-[400px]">
