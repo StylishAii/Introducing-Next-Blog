@@ -30,7 +30,20 @@ export const metadata: Metadata = {
     type:"website",
     url:process.env.NEXTAUTH_URL
   },
-  keywords:["chat","friend","chat app", "instagram", "tiktok", "nextjs", "react"]
+  keywords:["chat","friend","chat app", "instagram", "tiktok", "nextjs", "react"],
+  twitter:{
+    images:[
+      {
+        url:"https://chatwme.vercel.app/twitter-image.png",
+        width:1200,
+        height:630,
+      }
+    ],
+    card:"summary_large_image",
+    site:process.env.NEXTAUTH_URL,
+    title:"ChatWithMe",
+    description:"A next-gen chat app for friends"
+  }
 };
 
 const DynamicAblyProvider = dynamic(()=> import('@/components/Ably/AblyProvider'), {
