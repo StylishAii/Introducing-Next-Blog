@@ -66,7 +66,7 @@ export const POST = async (req: Request) => {
       from: "hello@shukurdev.pro",
       to: newUser.email,
       subject: "Please Activate Your Account",
-      html: `<p>Hello ${newUser.name}, please activate your account by clicking this link ${process.env.NEXTAUTH_URL}/activate/${newToken.token}</p>`,
+      html: `<p>Hello ${newUser.name}, please activate your account by clicking this link ${process.env.NEXTAUTH_URL}/activate/${newToken.token}?id=${newUser._id}</p>`,
     });
     return NextResponse.json(
       { message: "User is registered", redirectURL: "/login" },
