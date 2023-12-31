@@ -37,6 +37,8 @@ const authOptions: NextAuthOptions = {
                         const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
                         if(isPasswordCorrect) {
                             return user;
+                        }else {
+                            throw new Error("Password is incorrect")
                         }
                     }else{
                         throw new Error("User does not exist!")

@@ -9,7 +9,7 @@ export const GET = async(req:NextRequest, {params}:{params:{token:string}}) => {
     const id = searchParams.get("id")
     await connect();
 
-    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).getTime();
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
     const user = await Users
     .findOne({
