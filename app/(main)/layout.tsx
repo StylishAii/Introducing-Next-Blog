@@ -16,6 +16,21 @@ const geist = GeistSans;
 export const metadata: Metadata = {
   title: "ChatWithMe",
   description: "A next-gen chat app for friends",
+  openGraph:{
+    title:"ChatWithMe",
+    description: "A next-gen chat app for friends",
+    images:[
+      {
+        url:"https://chatwme.vercel.app/opengraph-image.png",
+        width:1200,
+        height:630,
+      }
+    ],
+    locale:"en-US",
+    type:"website",
+    url:process.env.NEXTAUTH_URL
+  },
+  keywords:["chat","friend","chat app", "instagram", "tiktok", "nextjs", "react"]
 };
 
 const DynamicAblyProvider = dynamic(()=> import('@/components/Ably/AblyProvider'), {
