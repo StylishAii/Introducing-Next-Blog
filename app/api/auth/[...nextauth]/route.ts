@@ -32,7 +32,7 @@ const authOptions: NextAuthOptions = {
                     const user = await Users.findOne({email: credentials.email})
                     if(user) {
                         if(!user.activated) {
-                            throw new Error("User is not activated")
+                            throw new Error("User is not activated. Check your email, please!")
                         }
                         const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
                         if(isPasswordCorrect) {

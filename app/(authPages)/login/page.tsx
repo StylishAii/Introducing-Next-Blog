@@ -34,7 +34,7 @@ export default function Login() {
       backgroundColor: "#333",
       color: "#fff",
     },
-    duration:2500
+    duration:3400
   });
   
   async function handleSubmit(e: any) {
