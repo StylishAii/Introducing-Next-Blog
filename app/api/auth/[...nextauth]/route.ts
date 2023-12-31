@@ -31,13 +31,18 @@ const authOptions: NextAuthOptions = {
                 try{
                     const user = await Users.findOne({email: credentials.email})
                     if(user) {
+                        if(!user.activated) {
+                            throw new Error("User is not activated")
+                        }
                         const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
                         if(isPasswordCorrect) {
                             return user;
                         }
+                    }else{
+                        throw new Error("User does not exist!")
                     }
                 } catch(err) {
-                    throw new Error("Error happened!")
+                    throw err; // This is how to throw the same error message that we passed earlier
                 }
             }
         }),
@@ -49,6 +54,27 @@ const authOptions: NextAuthOptions = {
                 return true;
             }
             else if(account?.provider === "github") {
+                await connect();
+                try{
+                    
+                    const existingUser = await Users.findOne({email: user.email});
+                    if(!existingUser) {
+                        const newUser = new Users({
+                            email: user.email,
+                            name: user.name
+                        });
+                        await newUser.save();
+                        return true;
+                    }
+                    if(existingUser){
+                        return true;
+                    }
+                } catch(err) {
+                    console.log("ERROR saving user", err);
+                    return false;
+                }
+            }
+            else if(account.provider === "google") {
                 await connect();
                 try{
                     

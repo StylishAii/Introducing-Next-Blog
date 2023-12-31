@@ -34,6 +34,7 @@ export default function Login() {
       backgroundColor: "#333",
       color: "#fff",
     },
+    duration:2500
   });
   
   async function handleSubmit(e: any) {
@@ -61,7 +62,7 @@ export default function Login() {
     
     if(res?.error) {
       console.log(res)
-      setWarning("Invalid email or password")
+      setWarning(res.error)
       notify();
       if(res?.url) {
         router.replace("/")
