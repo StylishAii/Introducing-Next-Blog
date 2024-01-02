@@ -1,18 +1,25 @@
 "use client";
+import Image from "next/image";
+import Logo from '@/public/darkLogo.svg'  
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
 import {AlertCircle, CheckCircle } from "lucide-react";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 function Register() {
   const [isVisible, setIsVisible] = React.useState(false);
   const [warning, setWarning] = React.useState<null | string>(null);
   const router = useRouter();
- 
+  const {status} = useSession();
+  
+  if(status === "authenticated"){
+    redirect("/")
+  }
 
   const notify = () =>
     toast.error(warning, {
@@ -74,8 +81,8 @@ function Register() {
   return (
     <div className="flex flex-col md:items-center pt-20 px-10 md:px-0 w-full md:w-[400px]">
       <div className="md:w-[600px] md:p-20 md:rounded-md md:backdrop-blur-md md:bg-white/10">
-        <h2 className="text-center text-[30px] font-semibold ">Register</h2>
-        <p className="text-center text-stone-600 text-xl mb-6">Let{"'"}s get started</p>
+        <Image className="mx-auto" src={Logo} alt="logo" width={270}/>
+        <h2 className="text-center text-[30px] font-semibold mb-6">Register</h2>
         <form className="flex flex-col space-y-7 " onSubmit={handleSubmit}>
           <Input
             isRequired

@@ -1,10 +1,10 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { useSession, signIn } from "next-auth/react";
 import Logo from '@/public/darkLogo.svg'  
@@ -15,11 +15,10 @@ export default function Login() {
   const router = useRouter();
   const session = useSession();
   
-  useEffect(()=>{
-    if(session?.status === "authenticated") {
-      router.replace('/')
-    }
-  },[session,router])
+
+  if(session?.status === "authenticated") {
+    redirect("/")
+  }
   
   const isValidEmail = (email: string) => {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i;
