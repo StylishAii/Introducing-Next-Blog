@@ -7,6 +7,9 @@
 - Feature ✨: Chatting
 
 
+- FIX: add a logo to /register page ✅
+- FIX: don't allow authorized users to any of /login or /register pages ✅
+
 
 
 Vercel:
