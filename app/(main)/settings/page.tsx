@@ -49,6 +49,6 @@ function Settings() {
       </section>
     </main>
   );
-};
+}
 
 export default Settings;
