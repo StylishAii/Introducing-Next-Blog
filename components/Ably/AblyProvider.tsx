@@ -4,10 +4,14 @@ import * as Ably from 'ably';
 import { AblyProvider } from 'ably/react';
 import { useSession } from 'next-auth/react';
 
-const tokenCache = new Map();
+// const tokenCache = new Map();
 
 export default function AblyClientProvider({ children}: { children: React.ReactNode,}) {
-  const {data:session} = useSession();
+ /** Including clientId in AblyProvider while doing a token request causes a request loop.
+  * To prevent this action only use clientId in necessary situations, e.g. Entering a chat
+  * or this example ->  https://github.com/ably-labs/ably-nextjs-fundamentals-kit/blob/70c085a0f31f4ae1030d5f118b09b114afdf6ce9/app/authentication/authentication-client.tsx
+  * 
+  *  const {data:session} = useSession();
   const clientId = session?.user?.email!;
   // Check if the token is already in the cache
   if (tokenCache.has(clientId)) {
@@ -18,8 +22,9 @@ export default function AblyClientProvider({ children}: { children: React.ReactN
       </AblyProvider>
     );
   }
+*/
 
-const client = new Ably.Realtime.Promise({ authUrl: '/api/token', authMethod:"POST", authHeaders:{clientId:session?.user?.email!}})
+const client = new Ably.Realtime.Promise({ authUrl: '/api/token', authMethod:"POST"})
 
   return (
     <AblyProvider client={client}>
