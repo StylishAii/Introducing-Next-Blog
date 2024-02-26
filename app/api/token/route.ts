@@ -5,7 +5,7 @@ const tokenCache = new Map();
 
 export async function POST(req: NextRequest) {
    // Check if the token is already in the cache
-   const clientId = req.headers.get('clientId')?.toString() || "NO_CLIENT_ID";
+   const clientId = ( (await req.formData()).get('clientId')?.toString() ) || "NO_CLIENT_ID";
    
 
   if (!process.env.ABLY_API_KEY) {
